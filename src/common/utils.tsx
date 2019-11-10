@@ -51,3 +51,6 @@ export function isEnptynum(i: number | null | undefined) {
     return (i == null || i == undefined || i == 0)
 }
 
+export function isLongWidth(location:string ){
+    return (location == "/menu/list/user" || location == "/menu/list/guest" )
+}

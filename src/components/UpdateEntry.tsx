@@ -11,47 +11,65 @@ import { useEffect } from 'react';
 import { EntryState } from '../states/EntryReducer';
 import Cookies from 'js-cookie';
 
-interface OwnProps { }
+interface OwnProps {
+  match: Match;
+}
+interface Match {
+  params: Params;
+}
+interface Params {
+  entryNo: string;
+  user: string;
+}
 
 type UpdateEntryProps = OwnProps & EntryState & Actions;
 
 export const UpdateEntry: React.FC<UpdateEntryProps> = (props: UpdateEntryProps) => {
   useEffect(() => {
-    props.onGet(20,isEnptystr(Cookies.get(Const.KEY_USER_ID)) ? null : Cookies.get(Const.KEY_USER_ID));
+    const entryNo = parseInt(props.match.params.entryNo);
+    const isguest = props.match.params.user == "guest";
+    props.updateState(entryNo, "entryNo");
+    props.updateState(isguest, "isguest");
+    props.onGet(entryNo, isEnptystr(Cookies.get(Const.KEY_USER_ID)) || isguest ? null : Cookies.get(Const.KEY_USER_ID));
     return undefined;
-  }, [])
+  }, [props.match.params.entryNo])
 
   return (
-    <div className="padding10">
+    <div>
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
-          <h2>更新</h2>
+        <Col sm={12}>
+          <h2>{props.isguest ? "参照" : "更新"}</h2>
+          {props.isguest && <p style={{ color: "red" }}>※未ログインユーザで作成されたデータのため更新はできません</p>}
           <label htmlFor="basic-url">元のRSSのURL</label>
-          <FormControl
-            type="text"
-            value={props.url}
-            disabled={true}
-            onChange={(e: any) => props.updateState(e.target.value, "url")}
-          />
+          <p>
+            <a
+              href={props.url}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              {props.url}
+            </a>
+          </p>
         </Col>
       </Row>
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <label htmlFor="basic-url">抽出後RSSのURL</label>
-          <FormControl
-            type="text"
-            disabled={true}
-            value={createURL(Const.GET_RSS_URL) + props.entryNo + ".xml/?ver=" + getext(props.version)}
-          />
+          <p>
+            <a
+              href={createURL(Const.GET_RSS_URL) + props.entryNo + ".xml/?ver=" + getext(props.version)}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              {createURL(Const.GET_RSS_URL) + props.entryNo + ".xml/?ver=" + getext(props.version)}
+            </a>
+          </p>
         </Col>
       </Row>
       <Br count={1} />
       <EntryContainer />
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           {props.loadingRegister ?
             <SpinnerButton />
             :
@@ -61,7 +79,7 @@ export const UpdateEntry: React.FC<UpdateEntryProps> = (props: UpdateEntryProps)
               onClick={
                 (e: any) => {
                   const body: PostEntryRequest = {
-                    entryNo:20,
+                    entryNo: props.entryNo,
                     url: props.url,
                     user_id: isEnptystr(Cookies.get(Const.KEY_USER_ID)) ? null : Cookies.get(Const.KEY_USER_ID),
                     site_name: props.sitename,
@@ -75,7 +93,7 @@ export const UpdateEntry: React.FC<UpdateEntryProps> = (props: UpdateEntryProps)
                   props.onUpdate(body)
                 }
               }
-              disabled={props.infoRegister}
+              disabled={props.infoRegister || props.isguest}
             >
               更新
                 </Button>
@@ -85,8 +103,7 @@ export const UpdateEntry: React.FC<UpdateEntryProps> = (props: UpdateEntryProps)
       {props.infoRegister &&
         <div>
           <Row className="width90">
-            <Col sm={1}></Col>
-            <Col sm={11}>
+            <Col sm={12}>
               <Alert
                 variant={"success"}
               >
@@ -99,8 +116,7 @@ export const UpdateEntry: React.FC<UpdateEntryProps> = (props: UpdateEntryProps)
       {props.validRegister &&
         <div>
           <Row className="width90">
-            <Col sm={1}></Col>
-            <Col sm={11}>
+            <Col sm={12}>
               <Alert
                 variant={"danger"}
               >
@@ -111,14 +127,13 @@ export const UpdateEntry: React.FC<UpdateEntryProps> = (props: UpdateEntryProps)
         </div>
       }
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <Button
             variant="primary"
             type="submit"
-            onClick={(e: any) => props.onGet(props.entryNo,null)}
+            onClick={(e: any) => props.toTop()}
           >
-            最初から
+            トップに戻る
               </Button>
         </Col>
       </Row>

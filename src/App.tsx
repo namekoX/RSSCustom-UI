@@ -22,6 +22,7 @@ export const App: React.FC<AppProps> = (props: AppProps) => {
       <React.Fragment>
         <div>
           <Switch>
+            <Route exact path='/' component={props.isAppStart ? MenuContainer: LoginContainer} />
             <Route path='/menu' component={props.isAppStart ? MenuContainer: LoginContainer} />
             <Route exact path='/login' component={props.isLogin ? MenuContainer : LoginContainer} />
             <Route exact path='/logout' component={Logout} />

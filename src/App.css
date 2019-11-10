@@ -21,13 +21,41 @@
   color: #09d3ac;
 }
 
+body{
+  background-color:#EAEDED;
+}
+
+.col-sm-9{
+  background-color:#FFF;
+  max-width:800px;
+}
+
+.longwidth{
+  max-width:1200px !important;
+}
+
+.HeadNavi{
+  color: #FFF !important;
+  background-color:#272727 !important;
+  height:60px;
+}
+
+.nav-link{
+  color:#FFF !important;
+  text-decoration:none !important;
+  }
+
+h1{
+  color:#FFF !important;
+  text-decoration:none !important;
+  }
+
 .width100 {
   width:100%;
 }
 
 .width90 {
   width:90%;
-  max-width: 800px;
 }
 
 .padding10 { 
@@ -59,7 +87,7 @@
 }
 
 .MenuItem {
-  color : #6c757d;
+  color : #6c757d !important;
 }
 
 .MenuItem.nav-link.active {
@@ -71,3 +99,8 @@
   display: inline-block;
   _display: inline;
 }
+
+Table.Fixed {
+  table-layout: fixed;
+}
+

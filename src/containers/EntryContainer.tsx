@@ -2,8 +2,8 @@ import { Action } from 'typescript-fsa';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { AppState } from '../store';
-import { CommonActions } from '../actions/CommonActions';
 import { Entry } from '../components/Entry';
+import { NewEntryActions } from '../actions/NewEntryActions';
 
 
 export interface Actions {
@@ -12,7 +12,7 @@ export interface Actions {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    updateState: (value: any, name:string) => dispatch(CommonActions.updateState({name,value})),
+    updateState: (value: any, name:string) => dispatch(NewEntryActions.updateState({name,value})),
   };
 }
 

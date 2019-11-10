@@ -9,7 +9,7 @@ type Naviprops = RootState & Actions;
 export const Navi: React.FC<Naviprops> = (props: Naviprops) => {
   return (
     <div>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" className = "HeadNavi">
         <Navbar.Brand href="/menu"><h1>RSSカスタム</h1></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

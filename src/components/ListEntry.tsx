@@ -3,16 +3,29 @@ import { Actions } from '../containers/ListEntryContainer';
 import { Button, Row, Col, FormControl, Alert, Table, Form } from "react-bootstrap";
 import { ListEntryState } from '../states/ListEntryReducer';
 import { useEffect } from 'react';
-import { isEnptystr, createURL, getext } from '../common/utils';
 import Const from '../common/const';
 import Cookies from 'js-cookie';
 import GetListEntryResultItem from '../interface/GetListEntryResultItem';
 import { SpinnerButton } from '../common/SpinnerButton';
+import Pagination from 'react-js-pagination';
+import { Br } from '../common/Br';
 
-interface OwnProps { }
+interface OwnProps {
+  location: Location;
+}
+interface Location {
+  pathname: string;
+}
+
 type ListEntryProps = OwnProps & ListEntryState & Actions;
 
-function renderTable(entrys: GetListEntryResultItem[], updater: (entryNo: number) => void) {
+function renderTable(entrys: GetListEntryResultItem[],
+  updater: any,
+  isuser: boolean,
+  deleter: (entryNo: number, user_id: string | null | undefined) => void,
+  searcher: (site_name: string | null, user_id: string | null | undefined, pageNumber: number) => void,
+  site_name: string
+) {
   const rows = entrys.map((entry, index) =>
     <tr key={index}>
       <td>
@@ -28,11 +41,25 @@ function renderTable(entrys: GetListEntryResultItem[], updater: (entryNo: number
         <Button
           variant="primary"
           type="submit"
-          onClick={(e: any) => updater(entry.no)}
+          onClick={(e: any) => updater(entry.no, isuser)}
         >
-          参照
+          開く
         </Button>
       </td>
+      {isuser &&
+        <td>
+          <Button
+            variant="primary"
+            type="submit"
+            onClick={(e: any) => {
+              deleter(entry.no, entry.user_id);
+              searcher(site_name, entry.user_id, 1);
+            }}
+          >
+            削除
+          </Button>
+        </td>
+      }
     </tr>
   );
 
@@ -41,18 +68,17 @@ function renderTable(entrys: GetListEntryResultItem[], updater: (entryNo: number
 
 export const ListEntry: React.FC<ListEntryProps> = (props: ListEntryProps) => {
   useEffect(() => {
-    props.onSearch(null, isEnptystr(Cookies.get(Const.KEY_USER_ID)) ? null : Cookies.get(Const.KEY_USER_ID));
+    props.onSearch(null, props.location.pathname == "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), 1);
     return undefined;
-  }, [])
+  }, [props.location.pathname])
 
   return (
     <div>
       <Row >
-        <Col sm={1}></Col>
         <Col sm={5}>
           <h2>登録済みRSS一覧</h2>
         </Col>
-        <Col sm={5}>
+        <Col sm={7}>
           <Form inline>
             <FormControl
               type="text"
@@ -60,15 +86,15 @@ export const ListEntry: React.FC<ListEntryProps> = (props: ListEntryProps) => {
               className="mr-sm-2"
               value={props.site_name}
               onChange={(e: any) => props.updateState(e.target.value, "site_name")}
-            />          
+            />
             {props.loading ?
               <SpinnerButton />
               :
               <Button
-              variant="outline-success"
-              onClick={(e: any) => props.onSearch(props.site_name, isEnptystr(Cookies.get(Const.KEY_USER_ID)) ? null : Cookies.get(Const.KEY_USER_ID))}
+                variant="outline-success"
+                onClick={(e: any) => props.onSearch(props.site_name, props.location.pathname == "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), 1)}
               >
-              検索
+                検索
               </Button>
             }
           </Form>
@@ -77,8 +103,7 @@ export const ListEntry: React.FC<ListEntryProps> = (props: ListEntryProps) => {
       {props.valid &&
         <div>
           <Row>
-            <Col sm={1}></Col>
-            <Col sm={11}>
+            <Col sm={12}>
               <Alert
                 variant={"danger"}
               >
@@ -89,23 +114,41 @@ export const ListEntry: React.FC<ListEntryProps> = (props: ListEntryProps) => {
         </div>
       }
       <Row>
-        <Col sm={1}></Col>
-        <Col sm={11}>
-          <Table striped bordered hover responsive size="sm">
+        <Col sm={12}>
+          <Table striped bordered hover responsive size="sm" className="Fixed">
             <thead>
               <tr>
-                <th>#</th>
+                <th style={{ width: '40px' }}>#</th>
                 <th>サイト名</th>
                 <th>URL(元)</th>
-                <th></th>
+                <th style={{ width: '80px' }}></th>
+                {props.location.pathname == "/menu/list/user" && <th style={{ width: '80px' }}></th>}
               </tr>
             </thead>
             <tbody>
-              {renderTable(props.entrys, props.toUpdate)}
+              {renderTable(props.entrys,
+                props.toUpdate,
+                props.location.pathname == "/menu/list/user",
+                props.onDelete,
+                props.onSearch,
+                props.site_name
+              )}
             </tbody>
+            <Br count={1} />
+            <Pagination
+              activePage={props.pagerActive}
+              itemsCountPerPage={Const.LIST_PAGER_PERPAGE}
+              totalItemsCount={props.pagerTotalCount}
+              pageRangeDisplayed={5}
+              onChange={
+                (e: any) => props.onSearch(props.site_name, props.location.pathname == "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), e)
+              }
+              itemClass='page-item'
+              linkClass='page-link'
+            />
           </Table>
         </Col>
       </Row>
-    </div >
+    </div>
   );
 };

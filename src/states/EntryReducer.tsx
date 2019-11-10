@@ -2,7 +2,6 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { NewEntryActions } from '../actions/NewEntryActions';
 import { UpdateEntryActions } from '../actions/UpdateEntryActions';
 import { isEnptynum, isEnptystr } from '../common/utils';
-import { CommonActions } from '../actions/CommonActions';
 
 export interface EntryState {
   url: string,
@@ -18,16 +17,17 @@ export interface EntryState {
   validConfirme: boolean,
   validConfirmeMsg: string,
   loadingConfirme: boolean,
-  chkLimitCount:number,
-  chkUntilDate:number,
-  LimitCount:string,
-  UntilDate:string,
+  chkLimitCount: number,
+  chkUntilDate: number,
+  LimitCount: string,
+  UntilDate: string,
   loadingRegister: boolean,
   validRegister: boolean,
   validRegisterMsg: string,
   infoRegister: boolean,
   infoRegisterMsg: string,
   entryNo: number,
+  isguest:boolean,
 }
 
 const initialState: EntryState = {
@@ -44,16 +44,17 @@ const initialState: EntryState = {
   validConfirme: false,
   validConfirmeMsg: '',
   loadingConfirme: false,
-  chkLimitCount:0,
-  chkUntilDate:0,
-  LimitCount:'',
-  UntilDate:'',
-  loadingRegister:false,
+  chkLimitCount: 0,
+  chkUntilDate: 0,
+  LimitCount: '',
+  UntilDate: '',
+  loadingRegister: false,
   validRegister: false,
   validRegisterMsg: '',
   infoRegister: false,
   infoRegisterMsg: '',
   entryNo: 0,
+  isguest: true,
 };
 
 export const EntryReducer = reducerWithInitialState(initialState)
@@ -64,7 +65,7 @@ export const EntryReducer = reducerWithInitialState(initialState)
       validConfirme: payload.validConfirme,
       validConfirmeMsg: payload.validConfirmeMsg,
       disableFields: payload.validConfirme,
-      loadingConfirme:false,
+      loadingConfirme: false,
     });
   })
   .case(NewEntryActions.onRegister, (state, payload) => {
@@ -74,26 +75,26 @@ export const EntryReducer = reducerWithInitialState(initialState)
       validRegisterMsg: payload.validRegisterMsg,
       infoRegister: payload.infoRegister,
       infoRegisterMsg: payload.infoRegisterMsg,
-      loadingRegister:false,
+      loadingRegister: false,
     });
   })
-  .case(NewEntryActions.onClear, (state, {}) => {
+  .case(NewEntryActions.onClear, (state, { }) => {
     return Object.assign({}, state, initialState);
   })
   .case(UpdateEntryActions.onGet, (state, payload) => {
     return Object.assign({}, state, {
       url: payload.url,
       sitename: payload.site_name,
-      incledecategory: payload.inclede_category,
-      incledesubject: payload.inclede_subject,
-      incledecreater: payload.inclede_creater,
-      maxcount: payload.max_count,
-      limitday: payload.limit_day,
-      chkIncledeCategory: isEnptystr(payload.inclede_category) ? 0:1,
-      chkIncledeSubject: isEnptystr(payload.inclede_subject) ? 0:1,
-      chkIncledeCreater: isEnptystr(payload.inclede_creater) ? 0:1,
-      chkLimitCount: isEnptynum(payload.max_count) ? 0:1,
-      chkUntilDate: isEnptynum(payload.limit_day) ? 0:1,
+      incledeCategory: payload.inclede_category,
+      incledeSubject: payload.inclede_subject,
+      incledeCreater: payload.inclede_creater,
+      LimitCount: payload.max_count,
+      UntilDate: payload.limit_day,
+      chkIncledeCategory: isEnptystr(payload.inclede_category) ? 0 : 1,
+      chkIncledeSubject: isEnptystr(payload.inclede_subject) ? 0 : 1,
+      chkIncledeCreater: isEnptystr(payload.inclede_creater) ? 0 : 1,
+      chkLimitCount: isEnptynum(payload.max_count) ? 0 : 1,
+      chkUntilDate: isEnptynum(payload.limit_day) ? 0 : 1,
       version: payload.version,
       validRegister: false,
       validRegisterMsg: "",
@@ -110,7 +111,7 @@ export const EntryReducer = reducerWithInitialState(initialState)
       loadingRegister: false,
     })
   })
-  .case(CommonActions.updateState, (state, { name, value }) => {
+  .case(NewEntryActions.updateState, (state, { name, value }) => {
     return Object.assign({}, state, { [name]: value });
   })
   ;

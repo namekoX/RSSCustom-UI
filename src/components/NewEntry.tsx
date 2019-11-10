@@ -9,16 +9,16 @@ import { getChkBool, createURL, getext, isEnptystr } from '../common/utils';
 import Const from '../common/const';
 import { EntryState } from '../states/EntryReducer';
 import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
 
-interface OwnProps {}
+interface OwnProps { }
 type NewEntryProps = OwnProps & EntryState & Actions;
 
 export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
   return (
     <div>
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <h2>新規登録</h2>
           <label htmlFor="basic-url">RSSのURL</label>
           <FormControl
@@ -32,8 +32,7 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
         </Col>
       </Row>
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           {props.validConfirme &&
             <Alert
               variant={"danger"}
@@ -44,8 +43,7 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
         </Col>
       </Row>
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           {props.loadingConfirme ?
             <SpinnerButton />
             :
@@ -62,8 +60,7 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
       </Row>
       <Br count={1} />
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <hr />
         </Col>
       </Row>
@@ -71,8 +68,7 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
         <div>
           <EntryContainer />
           <Row className="width90">
-            <Col sm={1}></Col>
-            <Col sm={11}>
+            <Col sm={12}>
               {props.loadingRegister ?
                 <SpinnerButton />
                 :
@@ -90,7 +86,7 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
                         inclede_creater: getChkBool(props.chkIncledeCreater) && props.incledeCreater != "" ? props.incledeCreater : null,
                         max_count: getChkBool(props.chkLimitCount) && !isNaN(Number(props.LimitCount)) ? Number(props.LimitCount) : null,
                         limit_day: getChkBool(props.chkUntilDate) && !isNaN(Number(props.UntilDate)) ? Number(props.UntilDate) : null,
-                        version:props.version
+                        version: props.version
                       }
                       props.onRegister(body)
                     }
@@ -107,8 +103,7 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
       {!props.disableFields && props.infoRegister &&
         <div>
           <Row className="width90">
-            <Col sm={1}></Col>
-            <Col sm={11}>
+            <Col sm={12}>
               <Alert
                 variant={"success"}
               >
@@ -117,12 +112,16 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
             </Col>
           </Row>
           <Row className="width90">
-            <Col sm={1}></Col>
-            <Col sm={11}>
-              <FormControl
-                type="text"
-                value={createURL(Const.GET_RSS_URL) + props.entryNo + ".xml/?ver=" + getext(props.version)}
-              />
+            <Col sm={12}>
+              <p>
+                <a
+                  href={createURL(Const.GET_RSS_URL) + props.entryNo + ".xml/?ver=" + getext(props.version)}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  {createURL(Const.GET_RSS_URL) + props.entryNo + ".xml/?ver=" + getext(props.version)}
+                </a>
+              </p>
             </Col>
           </Row>
         </div>
@@ -130,8 +129,7 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
       {!props.disableFields && props.validRegister &&
         <div>
           <Row className="width90">
-            <Col sm={1}></Col>
-            <Col sm={11}>
+            <Col sm={12}>
               <Alert
                 variant={"danger"}
               >
@@ -144,14 +142,13 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
       {!props.disableFields &&
         <div>
           <Row className="width90">
-            <Col sm={1}></Col>
-            <Col sm={11}>
+            <Col sm={12}>
               <Button
                 variant="primary"
                 type="submit"
                 onClick={(e: any) => props.onClear()}
               >
-                最初から
+                最初からやり直す
               </Button>
             </Col>
           </Row>

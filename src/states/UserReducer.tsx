@@ -1,5 +1,4 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { CommonActions } from '../actions/CommonActions';
 import { UserActions } from '../actions/UserActions';
 import Cookies from 'js-cookie';
 import Const from '../common/const';
@@ -10,7 +9,7 @@ export interface UserState {
   password: string,
   chkpassword: string,
   isNew: boolean,
-  appStart: boolean,
+  isChange: boolean,
   valid: boolean,
   loadingRegister: boolean,
   msg: string,
@@ -23,7 +22,7 @@ const initialState: UserState = {
   password: '',
   chkpassword: '',
   isNew: false,
-  appStart: false,
+  isChange: false,
   valid: false,
   loadingRegister: false,
   msg: '',
@@ -65,10 +64,21 @@ export const UserReducer = reducerWithInitialState(initialState)
       chkpassword: "",
     });
   })
-  .case(CommonActions.updateState, (state, { name, value }) => {
+  .case(UserActions.onUpdate, (state, payload) => {
+    return Object.assign({}, state, {
+      msg: payload.msg,
+      valid: payload.valid,
+      info: payload.info,
+      loadingRegister: false,
+      btnName: (payload.valid ? "更新" : "戻る"),
+      password: "",
+      chkpassword: "",
+    });
+  })
+  .case(UserActions.updateState, (state, { name, value }) => {
     return Object.assign({}, state, { [name]: value });
   })
-  .case(UserActions.onClear, (state, {}) => {
+  .case(UserActions.onClear, (state, { }) => {
     return Object.assign({}, state, initialState);
   })
   ;

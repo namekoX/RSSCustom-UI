@@ -7,6 +7,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { connectRouter, routerMiddleware, RouterState } from 'connected-react-router';
 import { AppReducer, RootState } from './states/AppReducer';
 import { ListEntryState , ListEntryReducer} from './states/ListEntryReducer';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 export const history = createBrowserHistory();
 
@@ -26,7 +27,7 @@ const store = createStore(
     ListEntry: ListEntryReducer,
     router: connectRouter(history),
   }),
-  applyMiddleware(thunk, routerMiddleware(history), logger)
+  composeWithDevTools(applyMiddleware(thunk, routerMiddleware(history), logger))
 );
 
 export default store;

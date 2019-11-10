@@ -13,8 +13,7 @@ export const Entry: React.FC<EntryProps> = (props: EntryProps) => {
   return (
     <div>
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={8}>
+        <Col sm={9}>
           <label htmlFor="basic-url">サイト名</label>
           <FormControl
             type="text"
@@ -34,8 +33,7 @@ export const Entry: React.FC<EntryProps> = (props: EntryProps) => {
       </Row>
       <Br count={1} />
       <Row className="width90">
-        <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <label htmlFor="basic-url">抽出条件(実施したい条件をチェックしてください)</label>
           <InputGroup className="mb-3 width90">
             <InputGroup.Prepend>
@@ -63,8 +61,7 @@ export const Entry: React.FC<EntryProps> = (props: EntryProps) => {
         </Col>
       </Row>
       <Row className="width90">
-      <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <InputGroup className="mb-3 width90">
             <InputGroup.Prepend>
               <InputGroup.Checkbox 
@@ -91,8 +88,7 @@ export const Entry: React.FC<EntryProps> = (props: EntryProps) => {
         </Col>       
       </Row>
       <Row className="width90">
-      <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <InputGroup className="mb-3 width90">
             <InputGroup.Prepend>
               <InputGroup.Checkbox 
@@ -119,8 +115,7 @@ export const Entry: React.FC<EntryProps> = (props: EntryProps) => {
         </Col>       
       </Row>
       <Row className="width90">
-      <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <InputGroup className="mb-3 width90">
             <InputGroup.Prepend>
               <InputGroup.Checkbox 
@@ -148,8 +143,7 @@ export const Entry: React.FC<EntryProps> = (props: EntryProps) => {
         </Col>       
       </Row>
       <Row className="width90">
-      <Col sm={1}></Col>
-        <Col sm={11}>
+        <Col sm={12}>
           <InputGroup className="mb-3 width90">
             <InputGroup.Prepend>
               <InputGroup.Checkbox 

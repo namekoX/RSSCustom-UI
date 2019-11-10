@@ -1,6 +1,5 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
 import { getAppStart, isLogin } from '../common/global';
-import { CommonActions } from '../actions/CommonActions';
 import { AppActions } from '../actions/AppActions';
 
 export interface RootState {
@@ -16,7 +15,7 @@ const initialState: RootState = {
 };
 
 export const AppReducer = reducerWithInitialState(initialState)
-  .case(CommonActions.updateState, (state, { name, value }) => {
+  .case(AppActions.updateState, (state, { name, value }) => {
     return Object.assign({}, state, { [name]: value });
   })
   .case(AppActions.updatelogininfo, (state, {}) => {

@@ -4,6 +4,8 @@ import { Row, Col, InputGroup, FormControl, Button, Card, ListGroupItem, ListGro
 import { UserState } from '../states/UserReducer';
 import PostUserRequest from '../interface/PostUserRequest';
 import { Br } from '../common/Br';
+import Cookies from 'js-cookie';
+import Const from '../common/const';
 
 interface OwnProps { }
 
@@ -14,8 +16,8 @@ export const Login: React.FC<UserProps> = (props: UserProps) => {
     <div className="padding10">
       <Card className="cardTitle">
         <Card.Body>
-          <Card.Title>{props.isNew ? "新規ユーザー登録" : "ログイン"}</Card.Title>
-          {!props.isNew &&
+          <Card.Title>{props.isNew ? "新規ユーザー登録" : props.isChange ? "パスワード変更" : "ログイン"}</Card.Title>
+          {!(props.isNew || props.isChange) &&
             <Card.Text>
               ユーザー登録することで一度登録をしたRSSを編集することができます。
               ログインせずに使用する場合は、作成したRSSは変更できないため、変更する必要がある場合は、もう一度RSSを新規登録をしてください。
@@ -23,29 +25,31 @@ export const Login: React.FC<UserProps> = (props: UserProps) => {
           }
         </Card.Body>
         <ListGroup className="list-group-flush">
-          <ListGroupItem>
-            <FormControl
-              type="text"
-              placeholder="ユーザーID"
-              value={props.user_id}
-              maxLength={50}
-              onChange={(e: any) => props.updateState(e.target.value, "user_id")}
-            />
-          </ListGroupItem>
+          {!props.isChange &&
+            <ListGroupItem>
+              <FormControl
+                type="text"
+                placeholder="ユーザーID"
+                value={props.user_id}
+                maxLength={50}
+                onChange={(e: any) => props.updateState(e.target.value, "user_id")}
+              />
+            </ListGroupItem>
+          }
           <ListGroupItem>
             <FormControl
               type="password"
-              placeholder="パスワード"
+              placeholder= {props.isChange ? "新パスワード" : "パスワード"}
               value={props.password}
               maxLength={50}
               onChange={(e: any) => props.updateState(e.target.value, "password")}
             />
           </ListGroupItem>
-          {props.isNew &&
+          {(props.isNew || props.isChange) &&
             <ListGroupItem>
               <FormControl
                 type="password"
-                placeholder="パスワード(確認)"
+                placeholder=　{props.isChange ? "新パスワード(確認)" : "パスワード(確認)"}
                 value={props.chkpassword}
                 maxLength={50}
                 onChange={(e: any) => props.updateState(e.target.value, "chkpassword")}
@@ -74,15 +78,17 @@ export const Login: React.FC<UserProps> = (props: UserProps) => {
             onClick={
               (e: any) => {
                 const body: PostUserRequest = {
-                  user_id: props.user_id,
+                  user_id: props.isChange ? Cookies.get(Const.KEY_USER_ID) : props.user_id,
                   password: props.password,
                 };
-                if (!props.isNew){
+                if (props.btnName=="ログイン") {
                   props.onLogin(body);
-                } else if(props.info){
+                } else if (props.btnName=="更新") {
+                  props.onUpdate(props.chkpassword, body);
+                } else if (props.btnName=="戻る") {
                   props.toTop();
                 } else {
-                  props.onRegister(props.chkpassword,body);
+                  props.onRegister(props.chkpassword, body);
                 }
               }
             }
@@ -91,7 +97,7 @@ export const Login: React.FC<UserProps> = (props: UserProps) => {
           </Button>
         </Card.Body>
       </Card>
-      {!props.isNew &&
+      {!(props.isNew || props.isChange) &&
         <div>
           <Br count={1} />
           <Button
@@ -117,9 +123,9 @@ export const Login: React.FC<UserProps> = (props: UserProps) => {
               }
             }
           >
-              ログインせずに使う
+            ログインせずに使う
           </Button>
-      </div>
+        </div>
       }
     </div >
   );

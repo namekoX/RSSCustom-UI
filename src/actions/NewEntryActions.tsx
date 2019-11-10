@@ -86,4 +86,5 @@ export const NewEntryActions = {
   onConfirme,
   onRegister,
   onClear: actionCreator<{}>('ACTIONS_NEW_CLEAR'),
+  updateState: actionCreator<{ name: string, value: any }>('ACTIONS_ENTRY_UPDATE_STATE'),
 };
