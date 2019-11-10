@@ -1,0 +1,13 @@
+
+export default class Const {
+    static GET_TITLE_URL = "rsscustom/gettitle/";
+    static POST_ENTRY_URL = "rsscustom/create_entry/";
+    static PUT_ENTRY_URL = "rsscustom/update_entry/";
+    static GET_ENTRY_URL = "rsscustom/get_entry/";
+    static GET_RSS_URL = "rsscustom/get_rss/";
+    static POST_USER_URL = "rsscustom/create_user/";
+    static LOGIN_URL = "rsscustom/login/";
+    static GET_LIST_ENTRY_URL = "rsscustom/get_entry_list/";
+    
+    static KEY_USER_ID = "RSS_COSTOM_USER";
+  }
