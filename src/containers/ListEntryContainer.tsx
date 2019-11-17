@@ -24,9 +24,9 @@ function mapDispatchToProps(dispatch: any) {
     },
     toUpdate: (entryNo: number, isuser: boolean) => {
       if (isuser){
-        dispatch(push("/menu/update/user/" + entryNo));
+        dispatch(push(Const.SITE_ROOT + "/menu/update/user/" + entryNo));
       } else {
-        dispatch(push("/menu/update/guest/" + entryNo));
+        dispatch(push(Const.SITE_ROOT + "/menu/update/guest/" + entryNo));
       }
     },
     onSelect: (url: string) => {

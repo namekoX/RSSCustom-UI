@@ -1,3 +1,5 @@
+import Const from "./const";
+
 export function getChkBool(chkValue: number) {
     return (chkValue == 1);
 }
@@ -23,6 +25,14 @@ export function createURL(url: string, prams?: { [key: string]: any; }) {
         }
     }
     return host + url + opt
+}
+
+export function getGAID(){
+    if (process.env.NODE_ENV === "production") {
+        return "";
+    } else {
+        return "";
+    }
 }
 
 export function getext(version: string) {
@@ -52,5 +62,5 @@ export function isEnptynum(i: number | null | undefined) {
 }
 
 export function isLongWidth(location:string ){
-    return (location == "/menu/list/user" || location == "/menu/list/guest" )
+    return (location == Const.SITE_ROOT + "/menu/list/user" || location == Const.SITE_ROOT + "/menu/list/guest" )
 }

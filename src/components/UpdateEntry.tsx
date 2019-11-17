@@ -13,6 +13,7 @@ import Cookies from 'js-cookie';
 
 interface OwnProps {
   match: Match;
+  location?: Location;
 }
 interface Match {
   params: Params;
@@ -20,6 +21,9 @@ interface Match {
 interface Params {
   entryNo: string;
   user: string;
+}
+interface Location {
+  pathname: string;
 }
 
 type UpdateEntryProps = OwnProps & EntryState & Actions;
@@ -31,8 +35,12 @@ export const UpdateEntry: React.FC<UpdateEntryProps> = (props: UpdateEntryProps)
     props.updateState(entryNo, "entryNo");
     props.updateState(isguest, "isguest");
     props.onGet(entryNo, isEnptystr(Cookies.get(Const.KEY_USER_ID)) || isguest ? null : Cookies.get(Const.KEY_USER_ID));
-    return undefined;
+    document.title = props.sitename == "" ? "RSSカスタム" : "RSSカスタム-" + props.sitename;
   }, [props.match.params.entryNo])
+
+  useEffect(() => {
+    document.title = props.sitename == "" ? "RSSカスタム" : "RSSカスタム-" + props.sitename;
+  }, [props.sitename])
 
   return (
     <div>
@@ -137,6 +145,7 @@ export const UpdateEntry: React.FC<UpdateEntryProps> = (props: UpdateEntryProps)
               </Button>
         </Col>
       </Row>
+      <Br count={2} />
     </div >
   );
 };

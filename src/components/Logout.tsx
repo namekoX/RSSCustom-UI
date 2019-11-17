@@ -14,7 +14,7 @@ export class Logout extends React.Component {
       <div className="padding10">
         ログアウトしました
         <Br count={1} />
-        <Link to="/menu">トップへ戻る</Link>
+        <Link to={Const.SITE_ROOT + "/menu"}>トップへ戻る</Link>
       </div >
     );
   }

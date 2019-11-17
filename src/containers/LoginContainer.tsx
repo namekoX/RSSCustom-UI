@@ -41,13 +41,13 @@ function mapDispatchToProps(dispatch: any) {
       await dispatch(chkUser(Const.LOGIN_URL, body));
       dispatch(AppActions.updatelogininfo({ }));
       if (getAppStart()) {
-        dispatch(push("/menu"));
+        dispatch(push(Const.SITE_ROOT + "/menu"));
       };
     },
     onNoLoginStart:() =>{
       setAppStart(true);
       dispatch(AppActions.updatelogininfo({ }));
-      dispatch(push("/menu"));
+      dispatch(push(Const.SITE_ROOT + "/menu"));
     },
     toNew:() =>{
       dispatch(UserActions.updateState({ name: "loadingRegister", value: true }));
@@ -58,7 +58,7 @@ function mapDispatchToProps(dispatch: any) {
     },
     toTop:() =>{
       dispatch(AppActions.onClear({ }));
-      dispatch(push("/menu/new"));
+      dispatch(push(Const.SITE_ROOT + "/menu/new"));
     }
   };
 }

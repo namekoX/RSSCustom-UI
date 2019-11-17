@@ -68,8 +68,7 @@ function renderTable(entrys: GetListEntryResultItem[],
 
 export const ListEntry: React.FC<ListEntryProps> = (props: ListEntryProps) => {
   useEffect(() => {
-    props.onSearch(null, props.location.pathname == "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), 1);
-    return undefined;
+    props.onSearch(null, props.location.pathname == Const.SITE_ROOT + "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), 1);
   }, [props.location.pathname])
 
   return (
@@ -92,7 +91,7 @@ export const ListEntry: React.FC<ListEntryProps> = (props: ListEntryProps) => {
               :
               <Button
                 variant="outline-success"
-                onClick={(e: any) => props.onSearch(props.site_name, props.location.pathname == "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), 1)}
+                onClick={(e: any) => props.onSearch(props.site_name, props.location.pathname == Const.SITE_ROOT + "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), 1)}
               >
                 検索
               </Button>
@@ -122,13 +121,13 @@ export const ListEntry: React.FC<ListEntryProps> = (props: ListEntryProps) => {
                 <th>サイト名</th>
                 <th>URL(元)</th>
                 <th style={{ width: '80px' }}></th>
-                {props.location.pathname == "/menu/list/user" && <th style={{ width: '80px' }}></th>}
+                {props.location.pathname == Const.SITE_ROOT + "/menu/list/user" && <th style={{ width: '80px' }}></th>}
               </tr>
             </thead>
             <tbody>
               {renderTable(props.entrys,
                 props.toUpdate,
-                props.location.pathname == "/menu/list/user",
+                props.location.pathname == Const.SITE_ROOT + "/menu/list/user",
                 props.onDelete,
                 props.onSearch,
                 props.site_name
@@ -141,7 +140,7 @@ export const ListEntry: React.FC<ListEntryProps> = (props: ListEntryProps) => {
               totalItemsCount={props.pagerTotalCount}
               pageRangeDisplayed={5}
               onChange={
-                (e: any) => props.onSearch(props.site_name, props.location.pathname == "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), e)
+                (e: any) => props.onSearch(props.site_name, props.location.pathname == Const.SITE_ROOT + "/menu/list/guest" ? null : Cookies.get(Const.KEY_USER_ID), e)
               }
               itemClass='page-item'
               linkClass='page-link'

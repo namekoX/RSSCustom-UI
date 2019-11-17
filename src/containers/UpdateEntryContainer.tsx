@@ -31,7 +31,7 @@ function mapDispatchToProps(dispatch: any) {
     toTop:() =>{
       dispatch(AppActions.onClear({ }));
       dispatch(NewEntryActions.onClear({ }));
-      dispatch(push("/menu/new"));
+      dispatch(push(Const.SITE_ROOT + "/menu/new"));
     }
   };
 }

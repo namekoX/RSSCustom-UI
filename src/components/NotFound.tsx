@@ -2,6 +2,13 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Br } from '../common/Br';
 
+interface OwnProps {
+  location?: Location;
+}
+interface Location {
+  pathname: string;
+}
+
 export class NotFound extends React.Component {
   constructor (props:any) {
     super(props);

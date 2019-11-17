@@ -9,8 +9,6 @@ import './index.css';
 import { ConnectedRouter } from 'connected-react-router';
 import AppContainer from './containers/AppContainer';
 
-
-
 ReactDOM.render(
   <Provider store={Store}>
     <ConnectedRouter history={history}>

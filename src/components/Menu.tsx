@@ -9,6 +9,7 @@ import { Switch, Route } from 'react-router-dom';
 import UpdateEntryContainer from '../containers/UpdateEntryContainer';
 import { isLongWidth } from '../common/utils';
 import LoginContainer from '../containers/LoginContainer';
+import Const from '../common/const';
 
 interface OwnProps {
   location: Location;
@@ -52,11 +53,11 @@ export const Menu: React.FC<Menuprops> = (props: Menuprops) => {
           </Col>
           <Col sm={9} className={isLongWidth(props.location.pathname) ? "longwidth":""}>
             <Switch>
-              <Route exact path='/menu/new' component={NewEntryContainer} />
-              <Route path='/menu/update/:user/:entryNo' component={UpdateEntryContainer} />
-              {props.isLogin && <Route exact path='/menu/list/user' component={ListEntryContainer} />}
-              <Route exact path='/menu/list/guest' component={ListEntryContainer} />
-              <Route exact path='/menu/changepassword' component={LoginContainer} />
+              <Route exact path={Const.SITE_ROOT + '/menu/new'} component={NewEntryContainer} />
+              <Route path={Const.SITE_ROOT + '/menu/update/:user/:entryNo'}  component={UpdateEntryContainer} />
+              {props.isLogin && <Route exact path={Const.SITE_ROOT + '/menu/list/user'}  component={ListEntryContainer} />}
+              <Route exact path={Const.SITE_ROOT + '/menu/list/guest'}  component={ListEntryContainer} />
+              <Route exact path={Const.SITE_ROOT + '/menu/changepassword'}  component={LoginContainer} />
               <Route component={NewEntryContainer} />
             </Switch>
           </Col>

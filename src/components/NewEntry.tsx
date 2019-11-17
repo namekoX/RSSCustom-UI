@@ -11,10 +11,19 @@ import { EntryState } from '../states/EntryReducer';
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 
-interface OwnProps { }
+interface OwnProps {
+  location?: Location;
+}
+interface Location {
+  pathname: string;
+}
 type NewEntryProps = OwnProps & EntryState & Actions;
 
 export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
+  React.useEffect(() => {
+    document.title = props.sitename == "" ? "RSSカスタム" : "RSSカスタム-" + props.sitename;
+  }, [props.sitename])
+
   return (
     <div>
       <Row className="width90">
@@ -154,6 +163,7 @@ export const NewEntry: React.FC<NewEntryProps> = (props: NewEntryProps) => {
           </Row>
         </div>
       }
+    <Br count={2} />
     </div >
   );
 };

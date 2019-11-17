@@ -5,7 +5,12 @@ import { Br } from '../common/Br';
 import { getChkBool, getChkValue } from '../common/utils';
 import { EntryState } from '../states/EntryReducer';
 
-interface OwnProps { }
+interface OwnProps {
+  location?: Location;
+}
+interface Location {
+  pathname: string;
+}
 
 type EntryProps = OwnProps & EntryState & Actions;
 

@@ -14,4 +14,6 @@ export default class Const {
     static KEY_USER_ID = "RSS_COSTOM_USER";
 
     static LIST_PAGER_PERPAGE = 30;
+
+    static SITE_ROOT = "/app1"
   }

@@ -8,8 +8,16 @@ import { connectRouter, routerMiddleware, RouterState } from 'connected-react-ro
 import { AppReducer, RootState } from './states/AppReducer';
 import { ListEntryState , ListEntryReducer} from './states/ListEntryReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import ReactGA from 'react-ga';
+import { getGAID } from './common/utils';
 
 export const history = createBrowserHistory();
+ReactGA.initialize(getGAID());
+
+history.listen(({ pathname }) => {
+  ReactGA.set({ page: pathname });
+  ReactGA.pageview(pathname);
+});
 
 export type AppState = {
   Entry: EntryState,

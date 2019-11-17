@@ -5,6 +5,7 @@ import { AppActions } from '../actions/AppActions';
 import { push } from 'connected-react-router';
 import { NewEntryActions } from '../actions/NewEntryActions';
 import { UserActions } from '../actions/UserActions';
+import Const from '../common/const';
 
 export interface Actions {
   onSelect: (url: string) => void,
@@ -20,7 +21,7 @@ function mapDispatchToProps(dispatch: any) {
         dispatch(UserActions.updateState({ name: "isChange", value: true }));
         dispatch(UserActions.updateState({ name: "btnName", value: "更新" }));
       }
-      dispatch(push(url));
+      dispatch(push(Const.SITE_ROOT + url));
     }
   };
 }
