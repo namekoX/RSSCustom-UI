@@ -15,5 +15,5 @@ export default class Const {
 
     static LIST_PAGER_PERPAGE = 30;
 
-    static SITE_ROOT = "/app1"
+    static SITE_ROOT = ""
   }

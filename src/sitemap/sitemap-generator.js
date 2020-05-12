@@ -8,7 +8,7 @@ require("babel-register")({
   function generateSitemap() {
       return (
         new Sitemap(router)
-            .build("https://slavesystem.net/app1")
+            .build("https://rsscustom.slavesystems.com")
             .save("././public/sitemap.xml")
       );
   }
